@@ -1,0 +1,69 @@
+using System;
+using System.Collections.Generic;
+namespace ConsoleApp3
+{
+    class Program
+    {
+        static int[][] triangle = new int[][]
+            {
+                new int[] {     7},
+                new int[] {    3,8},
+                new int[] {   8,1,0},
+                new int[] {  2,2,4,4},
+              //new int[] { 4,5,2,6,5}
+            };
+
+        static int[] triangle0 = new int[] { 7,3,8,8,1,0,2,2,4,4};
+        static int save = 0;
+        static int k = 0;
+        static int[] nums = new int[triangle.Length -1];
+        static List<int> list = new List<int> { };
+        static int max = 0;
+        public static int sum(List<int> list)
+        {
+            int sum = 0;
+            foreach (int item in list)
+            {
+                sum += item;
+            }
+            return sum;
+        }
+
+        static void Main(string[] args)
+        {
+
+            int[] a_s = { 1,2};
+            int m = 2, n = triangle.Length - 1;
+            for (int j = 0; j < Math.Pow(2,triangle.Length -1); j++)
+            {
+                save = 0;
+                    int s = 0;
+                    int ii = j;
+                    for (int jk = 0; jk < n; jk++)
+                    {
+                        s = a_s[ii % m];
+                        nums[jk] = s;
+                        ii /= m;
+                    }
+                   
+                
+                list.Add(triangle[0][0]);
+                for (int i = 0; i < triangle.Length - 1; i++)
+                {
+                    k = i + nums[i];
+                    list.Add(triangle0[save + k]);
+                    save = i + k;
+                }
+                if(max < sum(list))
+                {
+                    max = sum(list);
+                }
+                list.Clear();
+                
+            }
+            Console.WriteLine(max);
+            
+        }
+       
+    }
+}
