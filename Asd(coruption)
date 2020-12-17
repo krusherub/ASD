@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] np = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            int n = int.Parse(np[0]);
+            double p = double.Parse(np[1]);
+
+            double[] g = Console.ReadLine().Split(new[] { ' ' }, n).Select(double.Parse).ToArray();
+
+            List<double> g1 = new List<double> { };
+            foreach (double i in g)
+                g1.Add(i);
+
+            Console.WriteLine(execute(n, p, g1));
+        }
+
+        public static double execute(int n, double p, List<double> g)
+        {
+            p = (100 - p) / 100;
+            g.Sort();
+            return count(g, p);
+        }
+        public static double count(List<double> g, double p)
+        {
+            while (true)
+            {
+                for (int i = 0;;)
+                {
+                    double a = g[i];
+                    double b = g[i + 1];
+                    double n = Math.Round(((g[i] + g[i + 1]) * p), 2);
+                    g.Remove(a);
+                    g.Remove(b);
+                    if (g.Count == 0)
+                        return n;
+                    for (int j = 0; j < g.Count; j++)
+                    {
+                        if (n <= g[j])
+                        {
+                            g.Insert(j, n);
+                            break;
+                        }
+                        if (j == g.Count - 1)
+                        {
+                            g.Add(n);
+                            break;
+                        }
+                    }
+                   
+                   break;
+                }
+
+            }
+
+        }
+
+    }
+
+}
