@@ -1,0 +1,68 @@
+using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<List<int>> myList = new List<List<int>>();
+            myList.Add(new List<int> { 7 });
+            myList.Add(new List<int> { 3,8 });
+            myList.Add(new List<int> { 8,9,0});
+            myList.Add(new List<int> { 2,2,4,4});
+
+            Console.WriteLine(findMax(myList));
+        }
+        public static int findMin(List<List<int>> triangle)
+        {
+            int[,] newArr = new int[triangle.Count, triangle.Count];
+
+            List<int> lastRow = triangle[triangle.Count - 1];
+            for (int i = 0; i < lastRow.Count; i++)
+            {
+                newArr[triangle.Count - 1, i] = lastRow[i];
+            }
+
+            for (int i = triangle.Count - 2; i > -1; i--)
+            {
+                List<int> row = triangle[i];
+                for (int j = 0; j < row.Count; j++)
+                {
+                    int left = newArr[i + 1, j];
+                    int right = newArr[i + 1, j + 1];
+                    int curr = row[j];
+                    int sum = curr + Math.Min(left, right);
+                    newArr[i, j] = sum;
+                }
+            }
+            return newArr[0, 0];
+        }
+        public static int findMax(List<List<int>> triangle)
+        {
+            int[,] newArr = new int[triangle.Count, triangle.Count];
+
+            List<int> lastRow = triangle[triangle.Count - 1];
+            for (int i = 0; i < lastRow.Count; i++)
+            {
+                newArr[triangle.Count - 1, i] = lastRow[i];
+            }
+
+            for (int i = triangle.Count - 2; i > -1; i--)
+            {
+                List<int> row = triangle[i];
+                for (int j = 0; j < row.Count; j++)
+                {
+                    int left = newArr[i + 1, j];
+                    int right = newArr[i + 1, j + 1];
+                    int curr = row[j];
+                    int sum = curr + Math.Max(left, right);
+                    newArr[i, j] = sum;
+                }
+            }
+            return newArr[0, 0];
+        }
+
+    }
+}
